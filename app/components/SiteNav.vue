@@ -6,7 +6,7 @@
     :style="{ color: iconColor }"
   >
     <div class="nav-content">
-      <span class="logo">{{ config.public.siteTitle }}</span>
+      <span class="logo">louaq</span>
       <n-flex align="center" justify="end">
         <!-- 明暗切换 -->
         <Transition name="fade" mode="out-in">
@@ -76,50 +76,6 @@ const renderIcon = (icon: string) => () =>
   h(NIcon, null, () => h(Icon, { name: icon }));
 
 // 导航栏菜单
-const navMenu = computed<DropdownOption[]>(() => [
-  {
-    key: "github",
-    label: "GitHub",
-    icon: renderIcon("icon:github"),
-    props: {
-      onClick: () => window.open("https://github.com/imsyy/site-status"),
-    },
-  },
-  {
-    key: "about",
-    label: t("nav.about"),
-    icon: renderIcon("icon:info"),
-  },
-  {
-    key: "logout",
-    label: t("nav.logout"),
-    show: statusStore.loginStatus,
-    icon: renderIcon("icon:logout"),
-    props: {
-      onClick: () => {
-        window.$dialog.warning({
-          title: "退出登录",
-          content: "确定要退出登录吗?",
-          positiveText: "确定",
-          negativeText: "取消",
-          transformOrigin: "center",
-          onPositiveClick: async () => {
-            const { code } = await $fetch("/api/logout", {
-              method: "POST",
-            });
-            if (code !== 200) {
-              window.$message.error("退出登录失败");
-              return;
-            }
-            window.$message.success("退出登录成功");
-            statusStore.loginStatus = false;
-            localStorage.removeItem("authToken");
-          },
-        });
-      },
-    },
-  },
-]);
 
 // 模式图标
 const themeIcon = computed(() => `icon:${colorMode.preference}-mode`);
