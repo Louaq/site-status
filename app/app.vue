@@ -90,6 +90,7 @@ onBeforeMount(checkSite);
 
 onMounted(() => {
   setSiteLang(statusStore.siteLang);
+  document.title = "网页状态检测";
 });
 </script>
 
